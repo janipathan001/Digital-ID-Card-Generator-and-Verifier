@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Digital ID Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-100 to-gray-300 min-h-screen flex flex-col items-center py-8">
+    <header class="w-full bg-gradient-to-r from-blue-700 via-blue-900 to-gray-900 shadow-lg py-4 px-8 fixed top-0 left-0 z-20 border-b border-blue-900 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <span class="bg-white/20 rounded-full p-2 shadow">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2zm0 0c0 1.104.896 2 2 2s2-.896 2-2-.896-2-2-2-2 .896-2 2zm0 0v2m0 4h.01"/></svg>
+            </span>
+            <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight drop-shadow-lg">Digital ID Card Generator &amp; Verifier</h1>
+        </div>
+        <div class="flex gap-4 items-center">
+            <button onclick="document.getElementById('profile-modal').classList.remove('hidden')" class="text-white bg-blue-600 hover:bg-blue-700 font-semibold px-5 py-2 rounded-lg shadow transition">Profile</button>
+            <a href="/logout" class="text-white bg-red-600 hover:bg-red-700 font-semibold px-5 py-2 rounded-lg shadow transition">Logout</a>
+        </div>
+    </header>
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="hidden fixed inset-0 z-30 flex items-center justify-center bg-black/40">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md border border-gray-200 relative">
+            <button onclick="document.getElementById('profile-modal').classList.add('hidden')" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold">&times;</button>
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Student Profile</h3>
+            <div class="grid grid-cols-1 gap-3">
+                <div><span class="font-medium text-gray-600">Roll No:</span> <span class="text-gray-900">{{ rollno }}</span></div>
+                <div><span class="font-medium text-gray-600">Name:</span> <span class="text-gray-900">{{ name }}</span></div>
+                <div><span class="font-medium text-gray-600">Class:</span> <span class="text-gray-900">{{ class_section }}</span></div>
+                <div><span class="font-medium text-gray-600">Branch:</span> <span class="text-gray-900">{{ branch }}</span></div>
+            </div>
+        </div>
+    </div>
+    <main class="w-full flex flex-col items-center justify-center min-h-screen pt-32 pb-12">
+        <div class="w-full max-w-3xl mx-auto bg-white/90 rounded-2xl shadow-2xl p-10 border border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">Welcome, <span class="text-blue-700">{{ name }}</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                <a href="/generate_id" class="flex flex-col items-center justify-center bg-blue-50 hover:bg-blue-100 border-2 border-blue-300 rounded-2xl p-6 shadow-lg transition min-h-[120px] h-full">
+                    <svg class="w-16 h-16 text-blue-600 mb-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2zm0 0c0 1.104.896 2 2 2s2-.896 2-2-.896-2-2-2-2 .896-2 2zm0 0v2m0 4h.01"/></svg>
+                    <span class="font-bold text-xl text-blue-800">Generate Digital ID Card</span>
+                </a>
+                <a href="/verify_id" class="flex flex-col items-center justify-center bg-green-50 hover:bg-green-100 border-2 border-green-300 rounded-2xl p-6 shadow-lg transition min-h-[120px] h-full">
+                    <svg class="w-16 h-16 text-green-600 mb-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="font-bold text-xl text-green-800">Verify Digital ID Card</span>
+                </a>
+            </div>
+            <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center border border-gray-100">
+                {% if id_card %}
+                    <a href="/download_id" class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold shadow mb-4 transition">Download Digital ID Card</a>
+                    <div class="mt-2">
+                        <img src="data:image/png;base64,{{ id_card.qr_base64 }}" alt="ID Card" class="rounded-xl shadow-lg border border-gray-200" style="max-width:320px;" />
+                    </div>
+                {% else %}
+                    <span class="text-red-600 font-semibold text-lg">Please generate Digital ID Card first</span>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+    <!-- Modal JS (for demonstration, you should use Alpine.js or similar for production) -->
+    <script>
+        // This is a simple modal toggle for demonstration. In production, use Alpine.js or similar for accessibility.
+        document.addEventListener('keydown', function(event) {
+            if(event.key === 'Escape') {
+                document.getElementById('profile-modal').classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html> 

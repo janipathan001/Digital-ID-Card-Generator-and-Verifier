@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Digital ID Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md bg-white p-8 rounded shadow">
+        <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+        <form method="POST" action="/login" class="space-y-4">
+            <div>
+                <label class="block mb-1 font-medium">Roll No</label>
+                <input type="text" name="rollno" required class="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+                <label class="block mb-1 font-medium">Password</label>
+                <input type="password" name="password" required class="w-full border rounded px-3 py-2" />
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Login</button>
+        </form>
+        <p class="mt-4 text-center text-sm">Don't have an account? <a href="/signup" class="text-green-600 hover:underline">Signup</a></p>
+    </div>
+</body>
+</html> 
